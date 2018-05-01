@@ -4,10 +4,8 @@ var express    = require('express'),
     bodyParser = require('body-parser'),    
     morgan     = require('morgan');
 
-// mongoose instance connection url connection
-mongoose.Promise = global.Promise;
-console.log('pasara la conexion?');
-mongoose.connect('mongodb://localhost/Tododb'); 
+
+
 
 console.log('paso la conexion!');
 
