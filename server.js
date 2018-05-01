@@ -1,12 +1,24 @@
 //  OpenShift sample Node application
-var express = require('express'),
-    app     = express(),
-    morgan  = require('morgan');
-    
+var express    = require('express'),
+    app        = express(),
+    Task       = require('./api/models/todoListModel'),     
+    mongoose   = require('mongoose'), 
+    bodyParser = require('body-parser'),    
+    morgan     = require('morgan');
+
+// mongoose instance connection url connection
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/Tododb'); 
+
 Object.assign=require('object-assign')
 
-app.engine('html', require('ejs').renderFile);
-app.use(morgan('combined'))
+//app.engine('html', require('ejs').renderFile);
+//app.use(morgan('combined'))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+var routes = require('./api/routes/todoListRoutes'); //importing route
+routes(app); //register the route
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
@@ -104,5 +116,9 @@ initDb(function(err){
 
 app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
+
+//app.listen(port);
+//console.log('todo list RESTful API server started on: ' + port);
+
 
 module.exports = app ;
