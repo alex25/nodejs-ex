@@ -15,8 +15,7 @@ Object.assign=require('object-assign')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(methodOverride());
-
+//
 //var router = express.Router();
 
 app.get('/po', function(req, res) {
