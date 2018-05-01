@@ -8,7 +8,10 @@ var express    = require('express'),
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
+console.log('pasara la conexion?');
 mongoose.connect('mongodb://localhost/Tododb'); 
+
+console.log('paso la conexion!');
 
 Object.assign=require('object-assign')
 
