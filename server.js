@@ -92,7 +92,7 @@ app.get('/pombo', function (req, res) {
   }
   if (db) {
     // Create a document with request IP and current time of request
-      res.send('{ "poombo":"pombo"} ');
+      res.send('{ poombo} ');
   } 
 });
 
