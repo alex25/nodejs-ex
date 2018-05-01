@@ -7,10 +7,10 @@ var express    = require('express'),
 
 Object.assign=require('object-assign')
 
-//app.engine('html', require('ejs').renderFile);
-//app.use(morgan('combined'))
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.engine('html', require('ejs').renderFile);
+app.use(morgan('combined'))
+//app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.json());
 
 var routes = require('./api/routes/todoListRoutes'); //importing route
 routes(app); //register the route
@@ -85,7 +85,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/pombo', function (req, res) {
-  res.send('{ poombo }');
+  res.send('{ pooooooombo }');
 });
 
 app.get('/pagecount', function (req, res) {
