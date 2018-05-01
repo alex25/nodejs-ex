@@ -7,13 +7,15 @@ var express    = require('express'),
 
 Object.assign=require('object-assign')
 
-app.engine('html', require('ejs').renderFile);
-app.use(morgan('combined'))
+//app.engine('html', require('ejs').renderFile);
+//app.use(morgan('combined'))
 //app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
+app.get('/pombo', function (req, res) {
+  res.send('{ pooooooombo }');
+});
 
-var routes = require('./api/routes/todoListRoutes'); //importing route
-routes(app); //register the route
+//routes(app); //register the route
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
@@ -84,9 +86,7 @@ app.get('/', function (req, res) {
   }
 });
 
-app.get('/pombo', function (req, res) {
-  res.send('{ pooooooombo }');
-});
+
 
 app.get('/pagecount', function (req, res) {
   // try to initialize the db on every request if it's not already
