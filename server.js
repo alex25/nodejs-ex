@@ -1,7 +1,7 @@
 //  OpenShift sample Node application
 var express    = require('express'),
     app        = express(),
-    Task       = require('./api/models/todoListModel'),     
+   // Task       = require('./api/models/todoListModel'),     
     bodyParser = require('body-parser'),    
     morgan     = require('morgan');
 
@@ -10,21 +10,21 @@ Object.assign=require('object-assign')
 //app.engine('html', require('ejs').renderFile);
 //app.use(morgan('combined'))
 //app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride());
 
-var router = express.Router();
+//var router = express.Router();
 
-router.get('/po', function(req, res) {
-   res.send("Hello World!");
+app.get('/po', function(req, res) {
+   res.end("{Hello:World}");
 });
 
 //routes(app); //register the route
-
+/*
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
@@ -142,3 +142,4 @@ console.log('Server running on http://%s:%s', ip, port);
 
 
 module.exports = app ;
+*/
