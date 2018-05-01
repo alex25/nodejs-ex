@@ -1,7 +1,6 @@
 //  OpenShift sample Node application
 var express    = require('express'),
-    app        = express(),
-    Task       = require('./api/models/todoListModel'),     
+    app        = express(),   
     bodyParser = require('body-parser'),    
     morgan     = require('morgan');
 
