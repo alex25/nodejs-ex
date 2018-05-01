@@ -73,6 +73,18 @@ app.get('/', function (req, res) {
 
 });
 
+app.get('/updateUserData', function (req, res) {
+
+    res.send('{ response:ok }');
+
+});
+
+app.get('/getAllUsersData', function (req, res) {
+
+    res.send('[{ user:pepe, x:22.3, y:1.51 }, { user:juan, x:22.7, y:11.3 }]');
+
+});
+
 app.get('/pagecount', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
