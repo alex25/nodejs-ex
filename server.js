@@ -85,15 +85,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/pombo', function (req, res) {
-  // try to initialize the db on every request if it's not already
-  // initialized.
-  if (!db) {
-    initDb(function(err){});
-  }
-  if (db) {
-    // Create a document with request IP and current time of request
-      res.send('{ poombo} ');
-  } 
+  res.send('{ poombo }');
 });
 
 app.get('/pagecount', function (req, res) {
