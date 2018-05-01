@@ -1,6 +1,7 @@
 //  OpenShift sample Node application
 var express    = require('express'),
     app        = express(),
+    Task       = require('./api/models/todoListModel'),     
     bodyParser = require('body-parser'),    
     morgan     = require('morgan');
 
@@ -12,17 +13,7 @@ Object.assign=require('object-assign')
 app.use(bodyParser.json());
 
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(methodOverride());
-
-var router = express.Router();
-
-router.get('/', function(req, res) {
-   res.send("Hello World!");
-});
-
-routes(app); //register the route
+//routes(app); //register the route
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
