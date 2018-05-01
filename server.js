@@ -2,16 +2,8 @@
 var express    = require('express'),
     app        = express(),
     Task       = require('./api/models/todoListModel'),     
-    mongoose   = require('mongoose'), 
     bodyParser = require('body-parser'),    
     morgan     = require('morgan');
-
-// mongoose instance connection url connection
-mongoose.Promise = global.Promise;
-console.log('pasara la conexion?');
-mongoose.connect('mongodb://localhost/Tododb'); 
-
-console.log('paso la conexion!');
 
 Object.assign=require('object-assign')
 
@@ -90,6 +82,18 @@ app.get('/', function (req, res) {
   } else {
     res.render('index.html', { pageCountMessage : null});
   }
+});
+
+app.get('/pombo', function (req, res) {
+  // try to initialize the db on every request if it's not already
+  // initialized.
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
+    // Create a document with request IP and current time of request
+      res.send('{ "poombo":"pombo"} ');
+  } 
 });
 
 app.get('/pagecount', function (req, res) {
