@@ -2,10 +2,8 @@
 var express    = require('express'),
     app        = express(), 
     bodyParser = require('body-parser'),    
+    methodOverride = require("method-override"),
     morgan     = require('morgan');
-
-
-
 
 console.log('paso la conexion!');
 
@@ -15,6 +13,7 @@ Object.assign=require('object-assign')
 //app.use(morgan('combined'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(methodOverride());
 
 
 
