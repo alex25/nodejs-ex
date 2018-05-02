@@ -72,8 +72,9 @@ app.get('/', function (req, res) {
 });
 
 app.post('/updateUserData', function (req, res) {
-  console.log('req: '+req.body);
-  console.log('req: '+req.params);
+  console.log('reqbody: '+JSON.stringify(req.body));
+  console.log('reqparams: '+JSON.stringify(req.params));
+  console.log('req: '+JSON.stringify(req));
   /*if (!db) {
       initDb(function(err){});
     }
