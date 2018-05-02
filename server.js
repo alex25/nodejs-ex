@@ -77,7 +77,8 @@ app.post('/updateUserData', function (req, res) {
       initDb(function(err){});
     }
     if (db) {
-      db.users.insert({user: req.body.user, x:req.body.x, y:req.body.y});
+      var collection = db.collection('users');
+      collection.insert({user: req.body.user, x:req.body.x, y:req.body.y});
     }
 
     res.contentType('application/json');
@@ -91,7 +92,8 @@ app.get('/getAllUsersData', function (req, res) {
       initDb(function(err){});
     }
     if (db) {
-      db.personas.find().toArray(function(err, docs) {
+      
+      db.collection('users').find().toArray(function(err, docs) {
         //imprimimos en la consola el resultado
         console.log(JSON.stringify(docs));
         console.dir(docs);
