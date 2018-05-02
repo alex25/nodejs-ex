@@ -86,6 +86,20 @@ app.post('/updateUserData', function (req, res) {
 
 });
 
+app.post('/deleteUserData', function (req, res) {
+  if (!db) {
+      initDb(function(err){});
+    }
+    if (db) {
+      var collection = db.collection('users');
+      collection.drop();
+    }
+
+    res.contentType('application/json');
+    res.send('{ response:ok }');
+
+});
+
 app.get('/getAllUsersData', function (req, res) {
 
     if (!db) {
