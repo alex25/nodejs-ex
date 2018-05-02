@@ -100,7 +100,7 @@ app.get('/getAllUsersData', function (req, res) {
       });
     } 
     res.contentType('application/json');
-    res.send('[{ user:pepe, x:22.3, y:1.51 }, { user:juan, x:22.7, y:11.3 }]');
+    res.send(JSON.stringify(docs));
 
 });
 
