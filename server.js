@@ -72,12 +72,35 @@ app.get('/', function (req, res) {
 });
 
 app.post('/updateUserData', function (req, res) {
+  console.log('req: '+req);
+  /*if (!db) {
+      initDb(function(err){});
+    }
+    if (db) {
+      db.users.insert({user: 'pepe', x:22.7, y:11.3});
+    }*/
+
     res.contentType('application/json');
     res.send('{ response:ok }');
 
 });
 
 app.post('/getAllUsersData', function (req, res) {
+
+  /*
+    if (!db) {
+      initDb(function(err){});
+    }
+    if (db) {
+      db.collection('counts').count(function(err, count ){
+        res.send('{ pageCount: ' + count + '}');
+      });
+      db.personas.find().toArray(function(err, docs) {
+        //imprimimos en la consola el resultado
+        console.dir(docs);
+      });
+    } 
+    */
     res.contentType('application/json');
     res.send('[{ user:pepe, x:22.3, y:1.51 }, { user:juan, x:22.7, y:11.3 }]');
 
