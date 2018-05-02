@@ -72,7 +72,8 @@ app.get('/', function (req, res) {
 });
 
 app.post('/updateUserData', function (req, res) {
-  console.log('req: '+req);
+  console.log('req: '+req.body);
+  console.log('req: '+req.params);
   /*if (!db) {
       initDb(function(err){});
     }
@@ -85,7 +86,7 @@ app.post('/updateUserData', function (req, res) {
 
 });
 
-app.post('/getAllUsersData', function (req, res) {
+app.get('/getAllUsersData', function (req, res) {
 
   /*
     if (!db) {
