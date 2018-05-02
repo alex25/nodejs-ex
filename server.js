@@ -97,10 +97,11 @@ app.get('/getAllUsersData', function (req, res) {
         //imprimimos en la consola el resultado
         console.log(JSON.stringify(docs));
         console.dir(docs);
+        res.contentType('application/json');
+        res.send(JSON.stringify(docs));
       });
     } 
-    res.contentType('application/json');
-    res.send(JSON.stringify(docs));
+
 
 });
 
