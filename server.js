@@ -78,7 +78,7 @@ app.post('/updateUserData', function (req, res) {
     }
     if (db) {
       var collection = db.collection('users');
-      collection.insert({user: req.body.user, latitude:req.body.latitude, logitude:req.body.logitude});
+      collection.insert({user: req.body.user, latitude:req.body.latitude, longitude:req.body.longitude});
     }
 
     res.contentType('application/json');
