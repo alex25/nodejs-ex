@@ -86,6 +86,21 @@ app.post('/updateUserData', function (req, res) {
 
 });
 
+app.post('/login', function (req, res) {
+  console.log('reqbody: '+JSON.stringify(req.body));
+  if (!db) {
+      initDb(function(err){});
+    }
+    if (db) {
+     // var collection = db.collection('users');
+     // collection.insert({user: req.body.user, latitude:req.body.latitude, logitude:req.body.logitude});
+    }
+
+    res.contentType('application/json');
+    res.send('{ response:ok }');
+
+});
+
 app.get('/deleteUserData', function (req, res) {
   if (!db) {
       initDb(function(err){});
@@ -109,13 +124,13 @@ app.get('/getAllUsersData', function (req, res) {
       
       db.collection('users').find().toArray(function(err, docs) {
         //imprimimos en la consola el resultado
-        for(i in tempArr){
-          delete tempArr[i]._id;
+        for(i in docs){
+          delete docs[i]._id;
         }
-        console.log(JSON.stringify(users));
-        console.dir(users);
+        console.log(JSON.stringify(docs));
+        console.dir(docs);
         res.contentType('application/json');
-        res.send(JSON.stringify(users));
+        res.send(JSON.stringify(docs));
       });
     } 
 
