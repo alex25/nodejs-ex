@@ -86,7 +86,7 @@ app.post('/updateUserData', function (req, res) {
 
 });
 
-app.post('/deleteUserData', function (req, res) {
+app.get('/deleteUserData', function (req, res) {
   if (!db) {
       initDb(function(err){});
     }
@@ -109,13 +109,9 @@ app.get('/getAllUsersData', function (req, res) {
       
       db.collection('users').find().toArray(function(err, docs) {
         //imprimimos en la consola el resultado
-        let users = docs.keys(new_user).forEach(
-          (key, index) => {
-              if(key === "_id"){
-                  delete new_user["_id"];
-              }
-          }
-        );
+        for(i in tempArr){
+          delete tempArr[i]._id;
+        }
         console.log(JSON.stringify(users));
         console.dir(users);
         res.contentType('application/json');
