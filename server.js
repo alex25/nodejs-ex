@@ -78,7 +78,7 @@ app.post('/updateUserData', function (req, res) {
     }
     if (db) {
       var collection = db.collection('users');
-      collection.insert({user: req.body.user, x:req.body.x, y:req.body.y});
+      collection.insert({user: req.body.user, latitude:req.body.latitude, logitude:req.body.logitude});
     }
 
     res.contentType('application/json');
@@ -109,10 +109,17 @@ app.get('/getAllUsersData', function (req, res) {
       
       db.collection('users').find().toArray(function(err, docs) {
         //imprimimos en la consola el resultado
-        console.log(JSON.stringify(docs));
-        console.dir(docs);
+        let users = docs.keys(new_user).forEach(
+          (key, index) => {
+              if(key === "_id"){
+                  delete new_user["_id"];
+              }
+          }
+        );
+        console.log(JSON.stringify(users));
+        console.dir(users);
         res.contentType('application/json');
-        res.send(JSON.stringify(docs));
+        res.send(JSON.stringify(users));
       });
     } 
 
