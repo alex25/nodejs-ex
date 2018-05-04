@@ -110,7 +110,7 @@ app.post('/randomPoints', function (req, res) {
   console.log('reqbody: '+JSON.stringify(req.body));
   // Usage Example.
   // Generates 100 points that is in a 1km radius from the given lat and lng point.
-  var randomGeoPoints = generateRandomPoints({'latitude':req.body.latitude, 'longitude':req.body.longitude}, 500, 10);
+  var randomGeoPoints = generateRandomPoints({'latitude':parseFloat(req.body.latitude), 'longitude':parseFloat(req.body.longitude)}, 500, 10);
   console.log(JSON.stringify(randomGeoPoints));
   res.contentType('application/json');
   res.send(JSON.stringify(randomGeoPoints));
