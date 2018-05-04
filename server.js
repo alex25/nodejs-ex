@@ -103,7 +103,7 @@ function generateRandomPoint(center, radius) {
   var xp = x/Math.cos(y0);
 
   // Resulting point.
-  return {'latitude':parseFloat(y+y0).toFixed(6) , 'longitude': parseFloat(xp+x0).toFixed(6)};
+  return {'latitude':parseFloat(parseFloat(y+y0).toFixed(6)) , 'longitude': parseFloat(parseFloat(xp+x0).toFixed(6))};
 }
 
 app.post('/randomPoints', function (req, res) {
@@ -111,6 +111,7 @@ app.post('/randomPoints', function (req, res) {
   // Usage Example.
   // Generates 100 points that is in a 1km radius from the given lat and lng point.
   var randomGeoPoints = generateRandomPoints({'latitude':req.body.latitude, 'longitude':req.body.longitude}, 500, 10);
+  console.log(JSON.stringify(randomGeoPoints));
   res.contentType('application/json');
   res.send(JSON.stringify(randomGeoPoints));
 
