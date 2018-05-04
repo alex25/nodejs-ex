@@ -103,7 +103,7 @@ function generateRandomPoint(center, radius) {
   var xp = x/Math.cos(y0);
 
   // Resulting point.
-  return {'latitude': y+y0, 'longitude': xp+x0};
+  return {'latitude':parseFloat(y+y0).toFixed(6) , 'longitude': parseFloat(xp+x0).toFixed(6)};
 }
 
 app.post('/randomPoints', function (req, res) {
