@@ -133,10 +133,23 @@ app.post('/updateUserData', function (req, res) {
     if (db) {
       var collection = db.collection('users');
       collection.insert({userName: req.body.userName, latitude:req.body.latitude, longitude:req.body.longitude});
+
+      db.collection('users').find().toArray(function(err, docs) {
+        //imprimimos en la consola el resultado
+        for(i in docs){
+          delete docs[i]._id;
+        }
+        console.log(JSON.stringify(docs));
+        console.dir(docs);
+        res.contentType('application/json');
+        res.send(JSON.stringify(docs));
+      });
+
+
     }
 
-    res.contentType('application/json');
-    res.send('{ response:ok }');
+    //res.contentType('application/json');
+    //res.send('{ response:ok }');
 
 });
 
