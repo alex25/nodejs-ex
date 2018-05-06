@@ -134,7 +134,9 @@ app.post('/updateUserData', function (req, res) {
       var collection = db.collection('users');
       collection.insert({user: req.body.user, latitude:req.body.latitude, longitude:req.body.longitude});
 
-      db.collection('users').find().toArray(function(err, docs) {
+      db.collection('users').find({
+        "user": { $ne: [req.body.user] }
+      }).toArray(function(err, docs) {
         //imprimimos en la consola el resultado
         for(i in docs){
           delete docs[i]._id;
