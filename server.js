@@ -110,7 +110,7 @@ app.post('/randomPoints', function (req, res) {
   console.log('reqbody: '+JSON.stringify(req.body));
   // Usage Example.
   // Generates 100 points that is in a 1km radius from the given lat and lng point.
-  var randomGeoPoints = generateRandomPoints({'latitude':req.body.latitude, 'longitude':req.body.longitude}, 500, 10);
+  var randomGeoPoints = generateRandomPoints({'latitude':parseFloat(req.body.latitude), 'longitude':parseFloat(req.body.longitude)}, 500, 10);
   console.log(JSON.stringify(randomGeoPoints));
   res.contentType('application/json');
   res.send(JSON.stringify(randomGeoPoints));
@@ -132,21 +132,11 @@ app.post('/updateUserData', function (req, res) {
     }
     if (db) {
       var collection = db.collection('users');
-      collection.insert({user: req.body.userName, latitude:req.body.latitude, longitude:req.body.longitude});
-
-      db.collection('users').find({
-        "userName": { $ne: [req.body.userName] }
-      }).toArray(function(err, docs) {
-        //imprimimos en la consola el resultado
-        for(i in docs){
-          delete docs[i]._id;
-        }
-        console.log(JSON.stringify(docs));
-        console.dir(docs);
-        res.contentType('application/json');
-        res.send(JSON.stringify(docs));
-      });
+      collection.insert({user: req.body.user, latitude:parseFloat(req.body.latitude), longitude:parseFloat(req.body.longitude)});
     }
+
+    res.contentType('application/json');
+    res.send('{ response:ok }');
 
 });
 
@@ -201,6 +191,20 @@ app.get('/getAllUsersData', function (req, res) {
 
 });
 
+app.get('/pagecount', function (req, res) {
+  // try to initialize the db on every request if it's not already
+  // initialized.
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
+    db.collection('counts').count(function(err, count ){
+      res.send('{ pageCount: ' + count + '}');
+    });
+  } else {
+    res.send('{ pageCount: -1 }');
+  }
+});
 
 // error handling
 app.use(function(err, req, res, next){
