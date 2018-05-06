@@ -110,7 +110,7 @@ app.post('/randomPoints', function (req, res) {
   console.log('reqbody: '+JSON.stringify(req.body));
   // Usage Example.
   // Generates 100 points that is in a 1km radius from the given lat and lng point.
-  var randomGeoPoints = generateRandomPoints({'latitude':req.body.latitude, 'longitude':req.body.longitude}, 500, 10);
+  var randomGeoPoints = generateRandomPoints({'latitude':parseFloat(req.body.latitude), 'longitude':parseFloat(req.body.longitude)}, 500, 10);
   console.log(JSON.stringify(randomGeoPoints));
   res.contentType('application/json');
   res.send(JSON.stringify(randomGeoPoints));
@@ -132,7 +132,7 @@ app.post('/updateUserData', function (req, res) {
     }
     if (db) {
       var collection = db.collection('users');
-      collection.insert({user: req.body.user, latitude:req.body.latitude, longitude:req.body.longitude});
+      collection.insert({userName: req.body.userName, latitude:req.body.latitude, longitude:req.body.longitude});
     }
 
     res.contentType('application/json');
