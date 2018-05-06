@@ -132,7 +132,7 @@ app.post('/updateUserData', function (req, res) {
     }
     if (db) {
       var collection = db.collection('users');
-      collection.insert({user: req.body.user, latitude:req.body.latitude, longitude:req.body.longitude});
+      collection.insert({user: req.body.user, latitude:parseFloat(req.body.latitude), longitude:parseFloat(req.body.longitude)});
     }
 
     res.contentType('application/json');
