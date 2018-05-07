@@ -125,7 +125,7 @@ app.get('/', function (req, res) {
 
 });
 
-app.post('/updateUserData', function (req, res) {
+app.post('/registerUser', function (req, res) {
   console.log('reqbody: '+JSON.stringify(req.body));
   if (!db) {
       initDb(function(err){});
@@ -134,15 +134,44 @@ app.post('/updateUserData', function (req, res) {
       var collection = db.collection('users');
       collection.insert({userName: req.body.userName, latitude:req.body.latitude, longitude:req.body.longitude});
 
+      db.collection('users').find({userName:req.body.userName}).toArray(function(err, docs) {
+        //imprimimos en la consola el resultado
+
+        var result = JSON.stringify(docs).replace("_id","userId");
+        console.log(result);
+        console.dir(docs);
+        res.contentType('application/json');
+        res.send(result);
+      });
+
+    }
+   // res.contentType('application/json');
+   // res.send('{ response:ok }');
+
+  });
+
+
+app.post('/updateUserData', function (req, res) {
+  console.log('reqbody: '+JSON.stringify(req.body));
+  if (!db) {
+      initDb(function(err){});
+    }
+    if (db) {
+      var collection = db.collection('users');
+      collection.update({_id: req.body.userId},{$set: {latitude:req.body.latitude, longitude:req.body.longitude}});
+      
       db.collection('users').find({userName:{$ne:req.body.userName}}).toArray(function(err, docs) {
         //imprimimos en la consola el resultado
+        
         for(i in docs){
           delete docs[i]._id;
         }
-        console.log(JSON.stringify(docs));
+       
+       var result = JSON.stringify(docs);
+        console.log(result);
         console.dir(docs);
         res.contentType('application/json');
-        res.send(JSON.stringify(docs));
+        res.send(result);
       });
 
 
