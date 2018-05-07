@@ -127,15 +127,15 @@ app.get('/', function (req, res) {
 
 app.post('/registerUser', function (req, res) {
   console.log('reqbody: '+JSON.stringify(req.body));
-  if (!db) {
+    if (!db) {
       initDb(function(err){});
     }
     if (db) {
 
-      db.collection('users').find({userName:req.body.userName}).toArray(function(err, docs) {
+      db.collection('users').find().toArray(function(err, docs) { //{userName:req.body.userName}
         //imprimimos en la consola el resultado
 
-        console.log(docs);
+        console.dir(docs);
         if(docs._id!=null){
           console.log("Ya Existe El Usuario.");
           res.contentType('application/json');
