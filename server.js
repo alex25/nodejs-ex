@@ -131,17 +131,30 @@ app.post('/registerUser', function (req, res) {
       initDb(function(err){});
     }
     if (db) {
+
+      db.collection('users').find({userName:req.body.userName}).toArray(function(err, docs) {
+        //imprimimos en la consola el resultado
+
+        console.log(docs);
+        if(docs._id!=null){
+          console.log("Ya Existe El Usuario.");
+          res.contentType('application/json');
+          res.send({"result":"error", "message":"Ya Existe El Usuario."});
+          return;
+        }
+        console.log("No Existe El Usuario.");
+       
+      });
+
       var collection = db.collection('users');
       collection.insert({userName: req.body.userName, latitude:req.body.latitude, longitude:req.body.longitude});
 
       db.collection('users').find({userName:req.body.userName}).toArray(function(err, docs) {
         //imprimimos en la consola el resultado
 
-        var result = JSON.stringify(docs).replace("_id","userId");
-        console.log(result);
         console.dir(docs);
         res.contentType('application/json');
-        res.send(result);
+        res.send({"userId":docs._id});
       });
 
     }
