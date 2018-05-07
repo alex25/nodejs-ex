@@ -147,7 +147,7 @@ app.post('/registerUser', function (req, res) {
       });
 
       var collection = db.collection('users');
-      collection.insert({userName: req.body.userName, latitude:req.body.latitude, longitude:req.body.longitude});
+      collection.insert({userName: req.body.userName, latitude:"0", longitude:"0"});
 
       db.collection('users').find({userName:req.body.userName}).toArray(function(err, docs) {
         //imprimimos en la consola el resultado
@@ -173,7 +173,7 @@ app.post('/updateUserData', function (req, res) {
       var collection = db.collection('users');
       collection.update({_id: req.body.userId},{$set: {latitude:req.body.latitude, longitude:req.body.longitude}});
       
-      db.collection('users').find({userName:{$ne:req.body.userName}}).toArray(function(err, docs) {
+      db.collection('users').find({userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}).toArray(function(err, docs) {
         //imprimimos en la consola el resultado
         
         for(i in docs){
