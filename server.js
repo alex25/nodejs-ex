@@ -132,11 +132,11 @@ app.post('/registerUser', function (req, res) {
     }
     if (db) {
       var collection = db.collection('users');
-      console.log('users: '+JSON.stringify(collection));
+      //console.log('users: '+JSON.stringify(collection));
       collection.find().toArray(function(err, docs) { //{userName:req.body.userName}
         //imprimimos en la consola el resultado
 
-        console.dir(docs);
+        console.log(docs);
         if(docs._id!=null){
           console.log("Ya Existe El Usuario.");
           res.contentType('application/json');
@@ -167,7 +167,7 @@ app.post('/registerUser', function (req, res) {
 
 app.post('/updateUserData', function (req, res) {
   console.log('reqbody: '+JSON.stringify(req.body));
-  if (!db) {
+    if (!db) {
       initDb(function(err){});
     }
     if (db) {
