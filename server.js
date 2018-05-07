@@ -131,8 +131,9 @@ app.post('/registerUser', function (req, res) {
       initDb(function(err){});
     }
     if (db) {
-
-      db.collection('users').find().toArray(function(err, docs) { //{userName:req.body.userName}
+      var collection = db.collection('users');
+      console.log('users: '+JSON.stringify(collection));
+      collection.find().toArray(function(err, docs) { //{userName:req.body.userName}
         //imprimimos en la consola el resultado
 
         console.dir(docs);
@@ -161,7 +162,7 @@ app.post('/registerUser', function (req, res) {
    // res.contentType('application/json');
    // res.send('{ response:ok }');
 
-  });
+});
 
 
 app.post('/updateUserData', function (req, res) {
