@@ -133,11 +133,11 @@ app.post('/registerUser', function (req, res) {
     if (db) {
       var collection = db.collection('users');
       //console.log('users: '+JSON.stringify(collection));
-      collection.find().toArray(function(err, docs) { //{userName:req.body.userName}
+      collection.find({userName:req.body.userName}).toArray(function(err, docs) { //{userName:req.body.userName}
         //imprimimos en la consola el resultado
 
         console.log(docs);
-        if(docs._id!=null){
+        if(docs.length>0){
           console.log("Ya Existe El Usuario.");
           res.contentType('application/json');
           res.send({"result":"error", "message":"Ya Existe El Usuario."});
@@ -147,16 +147,16 @@ app.post('/registerUser', function (req, res) {
        
       });
 
-      var collection = db.collection('users');
       collection.insert({userName: req.body.userName, latitude:"0", longitude:"0"});
-
-      db.collection('users').find({userName:req.body.userName}).toArray(function(err, docs) {
+      console.log("Inserto");
+      collection.find({userName:req.body.userName}).toArray(function(err, docs) {
         //imprimimos en la consola el resultado
 
         console.dir(docs);
         res.contentType('application/json');
-        res.send({"userId":docs._id});
+        res.send({"userId":docs[0]._id});
       });
+      console.log("Todo ok");
 
     }
    // res.contentType('application/json');
