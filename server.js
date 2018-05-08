@@ -128,6 +128,7 @@ app.get('/', function (req, res) {
 app.post('/registerUser', function (req, res) {
   console.log('reqbody: '+JSON.stringify(req.body));
     var exist=false;
+    var result={};
     if (!db) {
       initDb(function(err){});
     }
@@ -139,10 +140,9 @@ app.post('/registerUser', function (req, res) {
 
         console.log(docs);
         if(docs.length>0){
-          console.log("Ya Existe El Usuario.");
-          res.contentType('application/json');
-          res.send({"result":"error", "message":"Ya Existe El Usuario."});
           exist=true;
+          console.log("Ya Existe El Usuario.");
+          result={"result":"error", "message":"Ya Existe El Usuario."}
         }else{
           console.log("No Existe El Usuario.");
         }
@@ -156,10 +156,13 @@ app.post('/registerUser', function (req, res) {
           //imprimimos en la consola el resultado
   
           console.dir(docs);
-          res.contentType('application/json');
-          res.send({"userId":docs[0]._id});
+          result={"userId":docs[0]._id};
         });
       }
+
+      res.contentType('application/json');
+      res.send(result);
+      
       console.log("Todo ok");
 
     }
