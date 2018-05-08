@@ -146,19 +146,21 @@ app.post('/registerUser', function (req, res) {
         }else{
           console.log("No Existe El Usuario.");
         }
-       
+
+        if(!exist){
+          collection.insert({userName: req.body.userName, latitude:"0", longitude:"0"});
+          console.log("Inserto");
+          collection.find({userName:req.body.userName}).toArray(function(err, docs) {
+            //imprimimos en la consola el resultado
+    
+            console.dir(docs);
+            result={"userId":docs[0]._id};
+          });
+        }
+        
       });
 
-      if(!exist){
-        collection.insert({userName: req.body.userName, latitude:"0", longitude:"0"});
-        console.log("Inserto");
-        collection.find({userName:req.body.userName}).toArray(function(err, docs) {
-          //imprimimos en la consola el resultado
-  
-          console.dir(docs);
-          result={"userId":docs[0]._id};
-        });
-      }
+
 
       res.contentType('application/json');
       res.send(result);
