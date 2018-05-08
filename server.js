@@ -155,15 +155,20 @@ app.post('/registerUser', function (req, res) {
     
             console.dir(docs);
             result={"userId":docs[0]._id};
+            res.contentType('application/json');
+            res.send(result);
           });
+        }else{
+
+          res.contentType('application/json');
+          res.send(result);
         }
-        
+
       });
 
 
 
-      res.contentType('application/json');
-      res.send(result);
+
       
       console.log("Todo ok");
 
