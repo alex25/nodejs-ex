@@ -127,6 +127,7 @@ app.get('/', function (req, res) {
 
 app.post('/registerUser', function (req, res) {
   console.log('reqbody: '+JSON.stringify(req.body));
+    var exist=false;
     if (!db) {
       initDb(function(err){});
     }
@@ -141,21 +142,24 @@ app.post('/registerUser', function (req, res) {
           console.log("Ya Existe El Usuario.");
           res.contentType('application/json');
           res.send({"result":"error", "message":"Ya Existe El Usuario."});
-          return;
+          exist=true;
+        }else{
+          console.log("No Existe El Usuario.");
         }
-        console.log("No Existe El Usuario.");
        
       });
 
-      collection.insert({userName: req.body.userName, latitude:"0", longitude:"0"});
-      console.log("Inserto");
-      collection.find({userName:req.body.userName}).toArray(function(err, docs) {
-        //imprimimos en la consola el resultado
-
-        console.dir(docs);
-        res.contentType('application/json');
-        res.send({"userId":docs[0]._id});
-      });
+      if(!exist){
+        collection.insert({userName: req.body.userName, latitude:"0", longitude:"0"});
+        console.log("Inserto");
+        collection.find({userName:req.body.userName}).toArray(function(err, docs) {
+          //imprimimos en la consola el resultado
+  
+          console.dir(docs);
+          res.contentType('application/json');
+          res.send({"userId":docs[0]._id});
+        });
+      }
       console.log("Todo ok");
 
     }
