@@ -200,7 +200,7 @@ app.post('/updateUserData', function (req, res) {
         console.dir(docs);
         res.contentType('application/json');
         res.send(result);
-      }));
+      });
 
 
     }
