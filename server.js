@@ -142,7 +142,7 @@ app.post('/registerUser', function (req, res) {
         if(docs.length>0){
           exist=true;
           console.log("Ya Existe El Usuario.");
-          result={"result":"error", "message":"Ya Existe El Usuario."}
+          result={"result":"error", "message":"El usuario ya existe."}
         }else{
           console.log("No Existe El Usuario.");
         }
@@ -186,11 +186,11 @@ app.post('/updateUserData', function (req, res) {
     }
     if (db) {
       var collection = db.collection('users');
-      collection.update({"_id":ObjectId(req.body.userId)},{ $set: {"latitude":req.body.latitude, "longitude":req.body.longitude}},
+      collection.update({"_id":"5af37bb256b56a00245fa5a2"},{ $set: {"latitude":req.body.latitude, "longitude":req.body.longitude}},
           function( err, resp) {
             if ( err ) throw err;
             //console.log(resp[0]);
-            collection.find({"_id":{$ne:ObjectId(req.body.userId)}}).toArray(function(err, docs) { //,{latitude:{$ne:"0"}}) {userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}
+            collection.find({"_id":{$ne:"5af37bb256b56a00245fa5a2"}}).toArray(function(err, docs) { //,{latitude:{$ne:"0"}}) {userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}
               //imprimimos en la consola el resultado
               
               for(i in docs){
