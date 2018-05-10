@@ -186,11 +186,12 @@ app.post('/updateUserData', function (req, res) {
     }
     if (db) {
       var collection = db.collection('users');
-      collection.update({"_id":"5af37bb256b56a00245fa5a2"},{ $set: {"latitude":req.body.latitude, "longitude":req.body.longitude}},
+      var o_id = new mongo.ObjectID(req.body.userId);
+      collection.update({"_id":o_id},{ $set: {"latitude":req.body.latitude, "longitude":req.body.longitude}},
           function( err, resp) {
             if ( err ) throw err;
             //console.log(resp[0]);
-            collection.find({"_id":{$ne:"5af37bb256b56a00245fa5a2"}}).toArray(function(err, docs) { //,{latitude:{$ne:"0"}}) {userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}
+            collection.find({"_id":{$ne:o_id}}).toArray(function(err, docs) { //,{latitude:{$ne:"0"}}) {userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}
               //imprimimos en la consola el resultado
               
               for(i in docs){
