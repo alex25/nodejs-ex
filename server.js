@@ -186,21 +186,18 @@ app.post('/updateUserData', function (req, res) {
     }
     if (db) {
       var collection = db.collection('users');
-      collection.update({_id: req.body.userId},{latitude:1},{w:1},
+      collection.update({"_id": req.body.userId},{"latitude":"1"},{w:1},
           function( err, resp) {
             if ( err ) throw err;
-            console.log(resp[0]);
-            collection.find({_id:{$ne:req.body.userId}}).toArray(function(err, docs) { //,{latitude:{$ne:"0"}}) {userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}
+            //console.log(resp[0]);
+            collection.find({"_id":{$ne:req.body.userId}}).toArray(function(err, docs) { //,{latitude:{$ne:"0"}}) {userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}
               //imprimimos en la consola el resultado
               
               for(i in docs){
                 delete docs[i]._id;
               }
-              var result = "{}";
-              if(docs.length>0){
-                result=JSON.stringify(docs[0]);
-              }       
-
+              var result=JSON.stringify(docs);
+              
               console.log(result);
               console.dir(docs);
               res.contentType('application/json');
