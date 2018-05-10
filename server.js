@@ -186,7 +186,7 @@ app.post('/updateUserData', function (req, res) {
     }
     if (db) {
       var collection = db.collection('users');
-      collection.update({_id: req.body.userId},{$set: {latitude:req.body.latitude}},
+      collection.update({_id: req.body.userId},{latitude:1},{w:1},
           function( err, res) {
             if ( err ) throw err;
             console.log(res);
@@ -210,7 +210,7 @@ app.post('/updateUserData', function (req, res) {
           }
 
       );
-      //, longitude:req.body.longitude
+      // {latitude:req.body.latitude}, longitude:req.body.longitude
       
 
 
