@@ -187,9 +187,9 @@ app.post('/updateUserData', function (req, res) {
     if (db) {
       var collection = db.collection('users');
       collection.update({_id: req.body.userId},{$set: {latitude:req.body.latitude}},
-          function( err, result ) {
+          function( err, res) {
             if ( err ) throw err;
-
+            console.log(res);
             collection.find({_id:{$ne:req.body.userId}}).toArray(function(err, docs) { //,{latitude:{$ne:"0"}}) {userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}
               //imprimimos en la consola el resultado
               
@@ -200,6 +200,7 @@ app.post('/updateUserData', function (req, res) {
               if(docs.length>0){
                 result=JSON.stringify(docs[0]);
               }       
+
               console.log(result);
               console.dir(docs);
               res.contentType('application/json');
