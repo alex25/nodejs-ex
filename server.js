@@ -186,7 +186,8 @@ app.post('/updateUserData', function (req, res) {
     }
     if (db) {
       var collection = db.collection('users');
-      var o_id = new mongo.ObjectID(req.body.userId);
+      var ObjectID=require('mongodb').ObjectID;
+      var o_id = new ObjectID(req.body.userId);
       collection.update({"_id":o_id},{ $set: {"latitude":req.body.latitude, "longitude":req.body.longitude}},
           function( err, resp) {
             if ( err ) throw err;
