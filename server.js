@@ -196,6 +196,7 @@ app.post('/updateUserData', function (req, res) {
               //imprimimos en la consola el resultado
               
               for(i in docs){
+                docs[i].userId=docs[i]._id;
                 delete docs[i]._id;
               }
               var result=JSON.stringify(docs);
