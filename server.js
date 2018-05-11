@@ -224,6 +224,7 @@ app.post('/updateUserData', function (req, res) {
                 var dist=getDistance(p1,p2);
                 console.log(dist + "<"+radius);
                 if(dist<=radius){
+                  doc[i].distance=dist;
                   pointsClose.push(docs[i]);
                 }
               }
