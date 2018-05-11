@@ -210,7 +210,7 @@ app.post('/updateUserData', function (req, res) {
             //console.log(resp[0]);
             collection.find({"_id":{$ne:o_id}, "latitude":{$ne:"0"}}).toArray(function(err, docs) { //,{latitude:{$ne:"0"}}) {userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}
               //imprimimos en la consola el resultado
-              var radius=100;
+              var radius=800;
               if(req.body.radius!=null){
                 radius=req.body.radius;
               }
