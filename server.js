@@ -223,8 +223,8 @@ app.post('/updateUserData', function (req, res) {
                 p2={latitude:parseFloat(docs[i].latitude), longitude:parseFloat(docs[i].longitude)};
                 var dist=getDistance(p1,p2);
                 console.log(dist + "<"+radius);
-                if(dist<=radius){
-                  doc[i].distance=dist;
+                if(dist<=parseFloat(radius)){
+                  docs[i].distance=dist;
                   pointsClose.push(docs[i]);
                 }
               }
