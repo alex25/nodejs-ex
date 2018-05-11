@@ -106,6 +106,22 @@ function generateRandomPoint(center, radius) {
   return {'latitude':parseFloat(parseFloat(y+y0).toFixed(6)) , 'longitude': parseFloat(parseFloat(xp+x0).toFixed(6))};
 }
 
+var rad = function(x) {
+  return x * Math.PI / 180;
+};
+
+var getDistance = function(p1, p2) {
+  var R = 6378137; // Earth’s mean radius in meter
+  var dLat = rad(p2.latitude - p1.latitude);
+  var dLong = rad(p2.longitude - p1.longitude);
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(rad(p1.latitude)) * Math.cos(rad(p2.latitude)) *
+    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+  return d; // returns the distance in meter
+};
+
 app.post('/randomPoints', function (req, res) {
   console.log('reqbody: '+JSON.stringify(req.body));
   // Usage Example.
@@ -194,15 +210,25 @@ app.post('/updateUserData', function (req, res) {
             //console.log(resp[0]);
             collection.find({"_id":{$ne:o_id}, "latitude":{$ne:"0"}}).toArray(function(err, docs) { //,{latitude:{$ne:"0"}}) {userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}
               //imprimimos en la consola el resultado
-              
+              var radius=100;
+              if(req.body.radius!=null){
+                radius=req.body.radius;
+              }
+              var pointsClose=[];
               for(i in docs){
                 docs[i].userId=docs[i]._id;
                 delete docs[i]._id;
+
+                p1={latitude:parseFloat(req.body.latitude), longitude:parseFloat(req.body.longitude)};
+                p2={latitude:parseFloat(docs[i].latitude), longitude:parseFloat(docs[i].longitude)};
+                if(getDistance(p1,p2)<=radius){
+                  pointsClose.push(docs[i]);
+                }
               }
-              var result=JSON.stringify(docs);
+              var result=JSON.stringify(pointsClose);
               
               console.log(result);
-              console.dir(docs);
+              console.log(docs);
               res.contentType('application/json');
               res.send(result);
             });
