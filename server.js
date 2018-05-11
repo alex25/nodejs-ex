@@ -163,7 +163,7 @@ app.post('/registerUser', function (req, res) {
           console.log("No Existe El Usuario.");
         }
 
-        if(!exist){
+        if(!exist&&req.body.userName!=null){
           collection.insert({userName: req.body.userName, latitude:"0", longitude:"0"});
           console.log("Inserto");
           collection.find({userName:req.body.userName}).toArray(function(err, docs) {
@@ -210,7 +210,7 @@ app.post('/updateUserData', function (req, res) {
             //console.log(resp[0]);
             collection.find({"_id":{$ne:o_id}, "latitude":{$ne:"0"}}).toArray(function(err, docs) { //,{latitude:{$ne:"0"}}) {userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}
               //imprimimos en la consola el resultado
-              var radius=800;
+              var radius=1500;
               if(req.body.radius!=null){
                 radius=req.body.radius;
               }
