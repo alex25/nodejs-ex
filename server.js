@@ -230,7 +230,7 @@ app.post('/updateUserData', function (req, res) {
                 var dist=getDistance(p1,p2);
                 console.log(dist + "<"+radius);
                 if(dist<=parseFloat(radius)){
-                  if(actorLiveTime<5){
+                  if(actorLiveTime<3){
                     pointsClose.push(docs[i]);
                     //docs[i].distance=Math.round(dist);
                   }           
