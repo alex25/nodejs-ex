@@ -164,7 +164,7 @@ app.post('/registerUser', function (req, res) {
         }
 
         if(!exist&&req.body.userName!=null){
-          collection.insert({userName: req.body.userName, latitude:"0", longitude:"0"});
+          collection.insert({userName: req.body.userName, latitude:0, longitude:0});
           console.log("Inserto");
           collection.find({userName:req.body.userName}).toArray(function(err, docs) {
             //imprimimos en la consola el resultado
@@ -205,11 +205,11 @@ app.post('/updateUserData', function (req, res) {
       var ObjectID=require('mongodb').ObjectID;
       var o_id = new ObjectID(req.body.userId);
       var seconds= Math.floor(Date.now() / 1000);
-      collection.update({"_id":o_id},{ $set: {"latitude":req.body.latitude.toString(), "longitude":req.body.longitude.toString(), "timestamp":seconds.toString(), "online":"1"}},
+      collection.update({"_id":o_id},{ $set: {"latitude":req.body.latitude, "longitude":req.body.longitude, "timestamp":seconds}},
           function( err, resp) {
             if ( err ) throw err;
             //console.log(resp[0]);
-            collection.find({"_id":{$ne:o_id}, "latitude":{$ne:"0"}}).toArray(function(err, docs) { //,{latitude:{$ne:"0"}}) {userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}
+            collection.find({"_id":{$ne:o_id}, "latitude":{$ne:0}}).toArray(function(err, docs) { //,{latitude:{$ne:"0"}}) {userName:{$ne:req.body.userName}},{latitude:{$ne:"0"}}
               //imprimimos en la consola el resultado
               var radius=1500;
               if(req.body.radius!=null){
@@ -230,13 +230,11 @@ app.post('/updateUserData', function (req, res) {
                 var dist=getDistance(p1,p2);
                 console.log(dist + "<"+radius);
                 if(dist<=parseFloat(radius)){
-                  if(actorLiveTime<10){
-                    docs[i].online="1";
-                  }else{
-                    docs[i].online="0";
-                  }
-                  docs[i].distance=Math.round(dist).toString();
-                  pointsClose.push(docs[i]);
+                  if(actorLiveTime<5){
+                    pointsClose.push(docs[i]);
+                    //docs[i].distance=Math.round(dist);
+                  }           
+                 
                 }
               }
               var result=JSON.stringify(pointsClose);
