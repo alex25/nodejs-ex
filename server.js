@@ -204,7 +204,8 @@ app.post('/updateUserData', function (req, res) {
       var collection = db.collection('users');
       var ObjectID=require('mongodb').ObjectID;
       var o_id = new ObjectID(req.body.userId);
-      collection.update({"_id":o_id},{ $set: {"latitude":req.body.latitude, "longitude":req.body.longitude}},
+      var seconds= Math.floor(Date.now() / 1000);
+      collection.update({"_id":o_id},{ $set: {"latitude":req.body.latitude.toString(), "longitude":req.body.longitude.toString(), "timestamp":seconds.toString(), "online":"1"}},
           function( err, resp) {
             if ( err ) throw err;
             //console.log(resp[0]);
@@ -218,13 +219,23 @@ app.post('/updateUserData', function (req, res) {
               for(i in docs){
                 docs[i].userId=docs[i]._id;
                 delete docs[i]._id;
-
+                var actorLiveTime=0;
+                if(docs[i].timestamp!=null){
+                  actorLiveTime=seconds-parseFloat(docs[i].timestamp);
+                }
+                delete docs[i].timestamp;
+                
                 p1={latitude:parseFloat(req.body.latitude), longitude:parseFloat(req.body.longitude)};
                 p2={latitude:parseFloat(docs[i].latitude), longitude:parseFloat(docs[i].longitude)};
                 var dist=getDistance(p1,p2);
                 console.log(dist + "<"+radius);
                 if(dist<=parseFloat(radius)){
-                  docs[i].distance=dist;
+                  if(actorLiveTime<10){
+                    docs[i].online="1";
+                  }else{
+                    docs[i].online="0";
+                  }
+                  docs[i].distance=Math.round(dist);
                   pointsClose.push(docs[i]);
                 }
               }
