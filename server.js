@@ -230,10 +230,12 @@ app.post('/updateUserData', function (req, res) {
                 var dist=getDistance(p1,p2);
                 console.log(dist + "<"+radius);
                 if(dist<=parseFloat(radius)){
-                  if(actorLiveTime<3){
+
+                 //TODO: Descomentar en produccion la linea de abajo
+                 // if(actorLiveTime<3){
                     pointsClose.push(docs[i]);
                     //docs[i].distance=Math.round(dist);
-                  }           
+                 // }           
                  
                 }
               }
