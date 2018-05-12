@@ -235,7 +235,7 @@ app.post('/updateUserData', function (req, res) {
                   }else{
                     docs[i].online="0";
                   }
-                  docs[i].distance=Math.round(dist);
+                  docs[i].distance=Math.round(dist).toString();
                   pointsClose.push(docs[i]);
                 }
               }
