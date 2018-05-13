@@ -261,6 +261,79 @@ app.post('/updateUserData', function (req, res) {
 
 });
 
+
+app.post('/addEvent', function (req, res) {
+  console.log('reqbody: '+JSON.stringify(req.body));
+  var exist=false;
+  var result={};
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
+    var collection = db.collection('events');
+    //console.log('users: '+JSON.stringify(collection));
+    collection.find({eventName:req.body.eventName}).toArray(function(err, docs) { //{userName:req.body.userName}
+      //imprimimos en la consola el resultado
+
+      console.log(docs);
+      if(docs.length>0){
+        exist=true;
+        console.log("El evnto ya existe.");
+        result={"result":"error", "message":"El evnto ya existe."};
+      }else{
+        console.log("No existe el evento.");
+      }
+      
+      res.contentType('application/json');
+      if(!exist&&req.body.userName!=null){
+        collection.insert({eventName: req.body.eventName, latitude:0, longitude:0, eventType:req.body.eventType, category:req.body.category, 
+          begin:req.body.begin, category:req.body.end });
+        console.log("Inserto");
+        res.send('{ "response":"ok" }');
+      }else{
+        res.send(result);
+      }
+
+    });
+    
+    console.log("Todo ok");
+
+  }
+});
+
+app.post('/getEvents', function (req, res) {
+  console.log('reqbody: '+JSON.stringify(req.body));
+  var exist=false;
+  var result={};
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
+    var collection = db.collection('events').find().toArray(function(err, docs) {
+      var radius=500;
+      if(req.body.radius!=null){
+        radius=req.body.radius;
+      }
+      var pointsClose=[];
+      for(i in docs){
+        docs[i].userId=docs[i]._id;
+        delete docs[i]._id;
+        p1={latitude:parseFloat(req.body.latitude), longitude:parseFloat(req.body.longitude)};
+        p2={latitude:parseFloat(docs[i].latitude), longitude:parseFloat(docs[i].longitude)};
+        var dist=getDistance(p1,p2);
+        console.log(dist + "<"+radius);
+        if(dist<=parseFloat(radius)){
+            pointsClose.push(docs[i]);         
+        }
+      }
+      var result=JSON.stringify(pointsClose);
+      
+    
+    });
+
+  }
+});
+
 app.post('/login', function (req, res) {
   console.log('reqbody: '+JSON.stringify(req.body));
   if (!db) {
