@@ -278,7 +278,7 @@ app.post('/addEvent', function (req, res) {
       console.log(docs);
       if(docs.length>0){
         exist=true;
-        console.log("El evnto ya existe.");
+        console.log("El evento ya existe.");
         result={"result":"error", "message":"El evnto ya existe."};
       }else{
         console.log("No existe el evento.");
@@ -286,7 +286,7 @@ app.post('/addEvent', function (req, res) {
       
       res.contentType('application/json');
       if(!exist&&req.body.eventName!=null){
-        collection.insert({eventName: req.body.eventName, latitude:0, longitude:0, eventType:req.body.eventType, category:req.body.category, 
+        collection.insert({eventName: req.body.eventName, latitude:req.body.latitude, longitude:req.body.longitude, eventType:req.body.eventType, category:req.body.category, 
           begin:req.body.begin, category:req.body.end });
         console.log("Inserto");
         res.send('{ "response":"ok" }');
@@ -301,7 +301,7 @@ app.post('/addEvent', function (req, res) {
   }
 });
 
-app.post('/getEvents', function (req, res) {
+app.get('/getEvents', function (req, res) {
   console.log('reqbody: '+JSON.stringify(req.body));
   var exist=false;
   var result={};
@@ -314,9 +314,9 @@ app.post('/getEvents', function (req, res) {
       if(req.body.radius!=null){
         radius=req.body.radius;
       }
+      console.log(docs);
       var pointsClose=[];
       for(i in docs){
-        docs[i].userId=docs[i]._id;
         delete docs[i]._id;
         p1={latitude:parseFloat(req.body.latitude), longitude:parseFloat(req.body.longitude)};
         p2={latitude:parseFloat(docs[i].latitude), longitude:parseFloat(docs[i].longitude)};
@@ -355,6 +355,20 @@ app.get('/deleteUserData', function (req, res) {
     }
     if (db) {
       var collection = db.collection('users');
+      collection.drop();
+    }
+
+    res.contentType('application/json');
+    res.send('{ response:ok }');
+
+});
+
+app.get('/deleteEventData', function (req, res) {
+  if (!db) {
+      initDb(function(err){});
+    }
+    if (db) {
+      var collection = db.collection('events');
       collection.drop();
     }
 
