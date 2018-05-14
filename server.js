@@ -285,7 +285,7 @@ app.post('/addEvent', function (req, res) {
       }
       
       res.contentType('application/json');
-      if(!exist&&req.body.userName!=null){
+      if(!exist&&req.body.eventName!=null){
         collection.insert({eventName: req.body.eventName, latitude:0, longitude:0, eventType:req.body.eventType, category:req.body.category, 
           begin:req.body.begin, category:req.body.end });
         console.log("Inserto");
