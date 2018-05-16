@@ -287,7 +287,7 @@ app.post('/addEvent', function (req, res) {
       res.contentType('application/json');
       if(!exist&&req.body.eventName!=null){
         collection.insert({eventName: req.body.eventName, latitude:req.body.latitude, longitude:req.body.longitude, eventType:req.body.eventType, category:req.body.category, 
-          begin:req.body.begin, category:req.body.end });
+          begin:req.body.begin, end:req.body.end });
         console.log("Inserto");
         res.send('{ "response":"ok" }');
       }else{
