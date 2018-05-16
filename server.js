@@ -301,7 +301,7 @@ app.post('/addEvent', function (req, res) {
   }
 });
 
-app.get('/getEvents', function (req, res) {
+app.post('/getEvents', function (req, res) {
   console.log('reqbody: '+JSON.stringify(req.body));
   var exist=false;
   var result={};
