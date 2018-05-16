@@ -327,8 +327,8 @@ app.post('/getEvents', function (req, res) {
         }
       }
       var result=JSON.stringify(pointsClose);
-      
-    
+      res.contentType('application/json');
+      res.send(result);
     });
 
   }
